@@ -73,6 +73,16 @@ export default function OrderCreate({ menuItems }: OrderCreateProps) {
       <Head title="Place Order" />
       
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white py-10 px-4">
+        
+        <div className="max-w-7xl mx-auto mb-8">
+          <a
+            href="/"
+            className="text-blue-600 hover:underline dark:text-blue-400 text-lg font-semibold  dark:bg-gray-800 px-4 py-2 rounded shadow"
+          >
+            Home 
+          </a>
+        </div>
+
         <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 shadow rounded-lg p-8">
           <h1 className="text-3xl font-bold mb-6 text-center">Place Your Order</h1>
           
