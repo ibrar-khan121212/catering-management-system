@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('Email', 100);
             $table->string('Contact', 15);
             $table->timestamps();
-        });
+       });
     }
 
     /**

@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class InventoryItem extends Model
 {
     protected $primaryKey = 'Inventory_ID';
+    protected $fillable = [
+        'Name',
+        'Quantity_Available',
+        'Unit',
+    ];
 
     public function menuItems()
     {

@@ -9,21 +9,22 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    // Admin: View all orders
     public function index()
     {
-        // Load customer and event relationships for readable display
         $orders = Order::with(['customer', 'event'])->get();
         return view('orders.index', compact('orders'));
     }
 
+    // Admin: Show order creation form
     public function create()
     {
-        // Send all customers and events for dropdowns in the form
         $customers = Customer::all();
         $events = Event::all();
         return view('orders.create', compact('customers', 'events'));
     }
 
+    // Admin: Store a new order
     public function store(Request $request)
     {
         $request->validate([
@@ -38,13 +39,14 @@ class OrderController extends Controller
         return redirect()->route('orders.index')->with('success', 'Order created successfully.');
     }
 
+    // Admin: Show single order
     public function show($id)
     {
-        // Use consistent variable name: $order
         $order = Order::with(['customer', 'event'])->findOrFail($id);
         return view('orders.show', compact('order'));
     }
 
+    // Admin: Show order edit form
     public function edit($id)
     {
         $order = Order::with(['customer', 'event'])->findOrFail($id);
@@ -53,6 +55,7 @@ class OrderController extends Controller
         return view('orders.edit', compact('order', 'customers', 'events'));
     }
 
+    // Admin: Update order
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -68,11 +71,12 @@ class OrderController extends Controller
         return redirect()->route('orders.index')->with('success', 'Order updated successfully.');
     }
 
+    // Admin: Delete an order
     public function destroy($id)
     {
         $order = Order::with(['menuItems', 'payments'])->findOrFail($id);
 
-        // Detach related menu items from pivot table
+        // Detach related menu items
         $order->menuItems()->detach();
 
         // Delete related payments
@@ -80,10 +84,26 @@ class OrderController extends Controller
             $payment->delete();
         }
 
-        // Now delete the order
+        // Delete the order itself
         $order->delete();
 
         return redirect()->route('orders.index')->with('success', 'Order deleted successfully.');
     }
 
+    // Customer: View only their own orders (matched via email)
+    public function myOrders()
+    {
+        $user = auth()->user();
+
+        // Match logged-in user to customer via email
+        $customer = Customer::where('Email', $user->email)->first();
+
+        $orders = $customer
+            ? Order::where('Customer_ID', $customer->Customer_ID)
+                ->with('event')
+                ->get()
+            : collect(); // empty if no matching customer
+
+        return view('orders.my', compact('orders'));
+    }
 }

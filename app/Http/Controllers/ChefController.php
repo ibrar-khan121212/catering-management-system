@@ -30,16 +30,17 @@ class ChefController extends Controller
     }
 
     public function show($id)
-        {
-            $item = Chef::with('employee')->findOrFail($id);
-            return view('chefs.show', compact('item'));
-        }
+    {
+        $chef = Chef::with('employee')->findOrFail($id);
+        return view('chefs.show', compact('chef'));
+    }
 
 
     public function edit($id)
     {
-        $item = Chef::with('employee')->findOrFail($id);
-        return view('chefs.edit', compact('item'));
+        $chef = Chef::with('employee')->findOrFail($id);
+        $employees = Employee::all();
+        return view('chefs.edit', compact('chef', 'employees'));
     }
 
 

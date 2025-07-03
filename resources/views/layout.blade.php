@@ -17,7 +17,7 @@
 
 </head>
 <body>
-    <div class="container">
+    <div class="container min-w-screen">
         @yield('content')
     </div>
 </body>

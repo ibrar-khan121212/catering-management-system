@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EventManager;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class EventManagerController extends Controller
@@ -15,7 +16,8 @@ class EventManagerController extends Controller
 
     public function create()
     {
-        return view('event_managers.create');
+        $employees = Employee::all();
+        return view('event_managers.create', compact('employees'));
     }
 
     public function store(Request $request)
@@ -31,10 +33,10 @@ class EventManagerController extends Controller
     }
 
     public function edit($id)
-{
-    $item = EventManager::findOrFail($id);
-    return view('event_managers.edit', compact('item'));
-}
+    {
+        $item = EventManager::findOrFail($id);
+        return view('event_managers.edit', compact('item'));
+    }
 
     public function update(Request $request, $id)
     {

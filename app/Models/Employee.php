@@ -8,6 +8,12 @@ class Employee extends Model
 {
     protected $primaryKey = 'Employee_ID';
 
+    protected $fillable = [
+        'Name',
+        'Contact',
+        'Salary',
+    ];
+
     public function events()
     {
         return $this->belongsToMany(Event::class, 'employee_event', 'Employee_ID', 'Event_ID')->withPivot('Role_in_Event', 'Shift_Time');

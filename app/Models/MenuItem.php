@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 class MenuItem extends Model
 {
     protected $primaryKey = 'MenuItem_ID';
+    protected $fillable = [
+        'Name',
+        'Price',
+        'Description',
+    ];
 
     public function orders()
     {
